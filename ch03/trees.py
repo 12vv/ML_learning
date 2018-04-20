@@ -72,4 +72,36 @@ def chooseBestFeatureToSplit(dataSet):
     return bestFeature
 
 
+# 找出出现次数最多的分类
+def majorityCnt(classList):
+    classCount = {}
+    for vote in classList:
+        if vote not in classCount.keys():
+            classCount[vote] = 0
+        classCount[vote] += 1
+    sortedClassCount = sorted(classCount.items(), key=operator.itemgetter(1), reverse=True)
+    return sortedClassCount[0][0]
+
+
+# 构造树，其中参数labels只是为了给出数据明确含义
+def createTree(dataSet, labels):
+    # 创建包含所有分类的list
+    classList = [example[-1] for example in dataSet]
+    # 如果classList[0]在classList中出现的次数==classList的长度，就表示分类统一(就这一种分类)，无需再分，直接返回
+    if classList.count(classList[0]) == len(classList):
+        return classList[0]
+    # 使用完了所有特征
+    if len(dataSet[0]) == 1:
+        return majorityCnt(classList)
+    bestFeat = chooseBestFeatureToSplit(dataSet)
+    bestFeatLabel = labels[bestFeat]
+    myTree = {bestFeatLabel: {}}
+    del(labels[bestFeat])
+    featValues = [example[bestFeat] for example in dataSet]
+    uniqueVals = set(featValues)
+    for value in uniqueVals:
+        subLabels = labels[:]
+        myTree[bestFeatLabel][value] = createTree(splitDataSet(dataSet, bestFeat, value), subLabels)
+    return myTree
+
 

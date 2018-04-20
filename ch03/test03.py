@@ -10,4 +10,8 @@ print(trees.calcShannonEnt(myDat))
 # print(trees.splitDataSet(myDat, 0, 1))
 # print(trees.splitDataSet(myDat, 0, 0))
 
-print(trees.chooseBestFeatureToSplit(myDat))
+# print(trees.chooseBestFeatureToSplit(myDat))
+
+
+myTree = trees.createTree(myDat, labels)
+print(myTree)
