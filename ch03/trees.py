@@ -105,3 +105,33 @@ def createTree(dataSet, labels):
     return myTree
 
 
+# 使用决策树的分类函数
+def classify(inputTree, featLabels, testVec):
+    # python 2
+    # firstStr = inputTree.keys()[0]
+    # 下面一行是 python3 写法
+    firstStr = list(inputTree.keys())[0]
+    secondDict = inputTree[firstStr]
+    # 把特征值名称转换为索引
+    featIndex = featLabels.index(firstStr)
+    key = testVec[featIndex]
+    valueOfFeat = secondDict[key]
+    if isinstance(valueOfFeat, dict):
+        classLabel = classify(valueOfFeat, featLabels, testVec)
+    else:
+        classLabel = valueOfFeat
+    return classLabel
+
+
+# 使用pickle序列化对象，之后不用每次都构造决策树
+def storeTree(inputTree, filename):
+    import pickle
+    fw = open(filename, 'w')
+    pickle.dump(inputTree, fw)
+    fw.close()
+
+
+def grabTree(filename):
+    import pickle
+    fr = open(filename)
+    return pickle.load(fr)
