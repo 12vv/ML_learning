@@ -88,7 +88,7 @@ def classifyNB(vec2Classify, p0Vec, p1Vec, pClass1):
     :param pClass1: trainNB0中的 pAbusive
     :return: 所分类别
     """
-    # 使用 * 乘符号，在numpy中表示对应位置元素相乘，累加相当于p(w1|1)+p(w2|1)+...
+    # 使用 * 乘符号，表示对应位置元素相乘(若想使用矩阵乘法，用dot()或先用mat()转换为numpy矩阵再*)，累加相当于p(w1|1)+p(w2|1)+...
     p1 = sum(vec2Classify * p1Vec) + log(pClass1)
     p0 = sum(vec2Classify * p0Vec) + log(1.0 - pClass1)
     if p1 > p0:
@@ -149,7 +149,7 @@ def spamTest():
         wordVector = bagOfWords2VecMN(vocabList, docList[docIndex])
         if classifyNB(wordVector, p0V, p1V, pSpam) != classList[docIndex]:
             errorCount += 1
-            print("classification error",docList[docIndex])
+            print("classification error", docList[docIndex])
     print('the error rate is: ', float(errorCount)/len(testSet))
 
 
