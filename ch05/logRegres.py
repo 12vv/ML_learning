@@ -99,3 +99,28 @@ def stocGradAscent1(dataMatrix, classLabels, numIter=150):
             del(dataIndex[randIndex])
     return weights
 
+
+def classifyVector(inX, weights):
+    prob = sigmoid(inX * weights)
+    if prob > 0.5:
+        return 1.0
+    else:
+        return 0.0
+
+
+# 应用
+def colicTest():
+    # 缺失数据项已被处理，填充为0
+    frTrain = open('horseColicTraining.txt')
+    frTest = open('horseColicTest.txt')
+    trainingSet = []
+    trainingLabels = []
+    for line in frTrain.readlines():
+        currLine = line.strip().split('\t')
+        lineArr = []
+        # 20个特征
+        for i in range(21):
+            lineArr.append(float(currLine[i]))
+        trainingSet.append(lineArr)
+        trainingLabels.append(float(currLine[21]))
+        
