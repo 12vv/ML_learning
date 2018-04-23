@@ -12,6 +12,7 @@ w = logRegres.gradAscent(dataArr, labelMat)
 # w.getA()返回ndarray方便取值
 # logRegres.plotBestFit(w.getA())
 
-weights = logRegres.stocGradAscent1(np.array(dataArr), labelMat)
-logRegres.plotBestFit(weights)
+# weights = logRegres.stocGradAscent1(np.array(dataArr), labelMat)
+# logRegres.plotBestFit(weights)
 
+logRegres.multiTest()
