@@ -85,4 +85,3 @@ def smoSimple(dataMatIn, classLabels, C, toler, maxIter):
                 continue
             # 反向更新alpha[i]
             alphas[i] += labelMat[j] * labelMat[i] * (alphaJold - alphas[j])
-            
