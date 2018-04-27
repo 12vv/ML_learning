@@ -15,9 +15,9 @@ reload(adaboost)
 # ax.scatter(np.array(dataMat[:, 0]), np.array(dataMat[:, 1]), c=np.array(colors))
 # plt.show()
 
-datArr, labelArr = adaboost.loadSimpData()
+datArr, labelArr = adaboost.loadDataSet('horseColicTraining2.txt')
 # classifierArr = adaboost.adaBoostTrainDS(datArr, labelArr, 30)
 # adaboost.adaClassify([0, 0], classifierArr)
-classifierArray, aggClassEst = adaboost.adaBoostTrainDS(datArr,labelArr,10)
+classifierArray, aggClassEst = adaboost.adaBoostTrainDS(datArr, labelArr,10)
 adaboost.plotROC(aggClassEst.T, labelArr)
 

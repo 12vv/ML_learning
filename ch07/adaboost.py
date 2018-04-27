@@ -22,7 +22,7 @@ def loadDataSet(fileName):
     for line in fr.readlines():
         lineArr = []
         curLine = line.strip().split('\t')
-        for i in curLine:
+        for i in range(numFeat-1):
             lineArr.append(float(curLine[i]))
         dataMat.append(lineArr)
         labelMat.append(float(curLine[-1]))
@@ -66,14 +66,14 @@ def buildStump(dataArr, classLabels, D):
                 errArr = np.mat(np.ones((m, 1)))
                 errArr[predictedVals == labelMat] = 0
                 weightedError = D.T * errArr
-                print("split: dim %d, thresh %.2f, thresh ineqal: %s, the weighted error is %.3f" % (i, threshVal, inequal, weightedError))
+                # print("split: dim %d, thresh %.2f, thresh ineqal: %s, the weighted error is %.3f" % (i, threshVal, inequal, weightedError))
                 if weightedError < minError:
                     minError = weightedError
                     bestClasEst = predictedVals.copy()
                     bestStump['dim'] = i
                     bestStump['thresh'] = threshVal
                     bestStump['ineq'] = inequal
-        return bestStump, minError, bestClasEst
+    return bestStump, minError, bestClasEst
 
 
 # AdaBoost算法
@@ -119,7 +119,7 @@ def adaClassify(datToClass, classifierArr):
     return np.sign(aggClassEst)
 
 
-# 画 ROC 图  ????? 画出来感觉不太对
+# 画 ROC 图
 def plotROC(predStrengths, classLabels):
     # 光标位置
     cur = (1.0, 1.0)
@@ -135,6 +135,7 @@ def plotROC(predStrengths, classLabels):
     fig = plt.figure()
     fig.clf()
     ax = plt.subplot(111)
+    print(sortedIndicies)
     for index in sortedIndicies.tolist()[0]:
         if classLabels[index] == 1.0:
             delX = 0
@@ -144,9 +145,10 @@ def plotROC(predStrengths, classLabels):
             delX = xStep
             delY = 0
             ySum += cur[1]
-    # 绘制从cur到(cur[0]-delX,cur[1]-delY)的线
-    ax.plot([cur[0], cur[0] - delX], [cur[1], cur[1] - delY], c='b')
-    cur = (cur[0] - delX, cur[1] - delY)
+        # 绘制从cur到(cur[0]-delX,cur[1]-delY)的线
+        # print(cur)
+        ax.plot([cur[0], cur[0] - delX], [cur[1], cur[1] - delY], c='b')
+        cur = (cur[0] - delX, cur[1] - delY)
     ax.plot([0, 1], [0, 1], 'b--')
     plt.xlabel('False positive rate')
     plt.ylabel('True positive rate')
@@ -154,3 +156,6 @@ def plotROC(predStrengths, classLabels):
     ax.axis([0, 1, 0, 1])
     plt.show()
     print("the Area Under the Curve is: ", ySum*xStep)
+
+
+
