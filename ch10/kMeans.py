@@ -80,6 +80,7 @@ def biKmeans(dataSet, k, distMeas=distEclud):
                 # 取得在当前簇中的所有数据点
                 ptsInCurrCluster = dataSet[np.nonzero(clusterAssment[:, 0].A == i)[0], :]
                 centroidMat, splitClustAss = kMeans(ptsInCurrCluster, 2, distMeas)
+                print(centroidMat)
                 sseSplit = sum(splitClustAss[:, 1])#compare the SSE to the currrent minimum
                 sseNotSplit = sum(clusterAssment[np.nonzero(clusterAssment[:, 0].A != i)[0], 1])
                 print("sseSplit, and notSplit: ", sseSplit, sseNotSplit)

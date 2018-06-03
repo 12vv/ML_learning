@@ -12,8 +12,8 @@ from importlib import reload
 
 # myCentroids, clustAssing = kMeans.kMeans(datMat, 4)
 # print(myCentroids)
-# reload(kMeans)
-# datMat3 = np.mat(kMeans.loadDataSet('testSet2.txt'))
-# centList, myNewAssments = kMeans.biKmeans(datMat3, 3)
-# print(centList)
-geoResults = kMeans.geoGrab('1 VA Center', 'Augusta, ME')
+reload(kMeans)
+datMat3 = np.mat(kMeans.loadDataSet('testSet2.txt'))
+centList, myNewAssments = kMeans.biKmeans(datMat3, 3)
+print(centList)
+# geoResults = kMeans.geoGrab('1 VA Center', 'Augusta, ME')
